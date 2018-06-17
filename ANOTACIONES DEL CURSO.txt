@@ -45,3 +45,11 @@ NO ESTARÍA MAL TOMAR EL CURSO DE MONGO UNIVERSITY
 
 *********************************(Crear el Servidor Web)*****************************************
 + Crear un fichero dentro de api/app.js
+
+***********************************(Arquitectura MVC)********************************************
++ Es un patrón de diseño que se encarga de separar la lógica de negocio de la interfaz de usuario y es uno de las
+arquitecturas en desarrollo de aplicaciones más comunes que facilita la funcionalidad, la mantenibilidad, escalabilidad. También nos mejora la forma de programar
+
++ El controlador es el intermediario entre la vista y el controlador
+
+
