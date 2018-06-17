@@ -76,6 +76,7 @@ function saveUser(req, res){
 	}
 }
 
+//Función para el login de usuarios
 function loginUser(req,res){
 	var params = req.body;
 
@@ -115,10 +116,26 @@ function loginUser(req,res){
 	});
 }
 
+//Método para conseguir datos de un usuario
+function getUser(req, res){
+	//Obtener el id por la URL
+	var userId = req.params.id;
+
+	//Buscar el usuario por el ID
+	User.findById(userId, (err, user)=>{
+		if(err) return res.status(500).send({message:'Error en la petición'});
+
+		if(!user) return res.status(404).send({message:'El usuario no existe'});
+
+		return res.status(200).send({user});
+	});
+}
+
 //Exporto las funciones fuera de este fichero
 module.exports = {
 	home,
 	pruebas,
 	saveUser,
-	loginUser
+	loginUser,
+	getUser
 };

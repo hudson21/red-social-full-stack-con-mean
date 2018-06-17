@@ -52,4 +52,5 @@ arquitecturas en desarrollo de aplicaciones más comunes que facilita la funcion
 
 + El controlador es el intermediario entre la vista y el controlador
 
-
++ Cuando nos llegan datos por la URL utilizamos params
++ Cuando nos llegan datos por POST o por PUT utilizamos body
