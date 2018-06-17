@@ -31,3 +31,17 @@ NO ESTARÍA MAL TOMAR EL CURSO DE MONGO UNIVERSITY
 + Librería para Mongoose(ORM para mongoDB): npm install mongoose --save
 + Librería moment: npm install moment --save
 + Librería para node.js(Watcher para compilar los cambios en tiempo real): npm install nodemon --save-dev
+
+*******************************(La parte del BACKEND)*******************************************
++ La parte del backend va a estar basada en el archivo de index.js
+
++ Ejecutar el fichero de index.js: Dentro de la carpeta api/ node index.js
++ Utilizar nodemon: Abrir el packege.json->
+ "scripts": {
+    "start":"nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
++npm start
+
+*********************************(Crear el Servidor Web)*****************************************
++ Crear un fichero dentro de api/app.js
