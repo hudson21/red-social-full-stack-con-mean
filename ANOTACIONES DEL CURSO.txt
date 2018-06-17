@@ -16,3 +16,18 @@ NO ESTARÍA MAL TOMAR EL CURSO DE MONGO UNIVERSITY
 
 ******************************(Instalar Robot 3T interfaz gráfica de mongoDB)******************
 + Buscar en google roboMongo
+
+******************************(Crear el proyecto de node.js)***********************************
++ npm init (Seguir las instrucciones del wizard en la línea de comandos)
++ cat package.json
+
+******************************(Instalar librerías y paquetes)**********************************
++ Express: Framework que funciona sobre node.js que nos permite trabajar con rutas, peticiones http y demás....
++ Dentro de la carpeta de api/ -> npm install express --save
++ Librería para encriptar contraseñas y demás: npm install bcrypt-nodejs --save
++ Permite convertir los JSON a objetos de javascript: npm install body-parser --save
++ Librería para subida de ficheros: npm install connect-multiparty --save
++ Librería para JWT: npm install jwt-simple --save
++ Librería para Mongoose(ORM para mongoDB): npm install mongoose --save
++ Librería moment: npm install moment --save
++ Librería para node.js(Watcher para compilar los cambios en tiempo real): npm install nodemon --save-dev
