@@ -1,0 +1,18 @@
+Instalar mongoDB:
+-Bison: Representación en forma binaria de JSON
+-Crear carpeta dentro del diso C: llamada data
+-Dentro de data otra llamada db
+-En windows 10 debemos de quitar la opción de instalar mongoDB compas para que se instale bien
+
+Para usar mongoDB debemos de ejecutar:
+C:\Program Files\MongoDB\Server\3.6\bin (Aquí adentro estan los dos ejecutables)
+-mongod.exe para los procesos de demonio o background
+-mongo.exe para entrar dentro del servidor de mongo
+
+NO ESTARÍA MAL TOMAR EL CURSO DE MONGO UNIVERSITY
+
++ db.bookmarks.save((id:1, title:'Curso de angular'));
++
+
+******************************(Instalar Robot 3T interfaz gráfica de mongoDB)******************
++ Buscar en google roboMongo
