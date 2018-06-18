@@ -54,3 +54,6 @@ arquitecturas en desarrollo de aplicaciones más comunes que facilita la funcion
 
 + Cuando nos llegan datos por la URL utilizamos params
 + Cuando nos llegan datos por POST o por PUT utilizamos body
+
+*********************************(Instalar Mongoose Pagination)*********************************
++Dentro de api/ npm install mongoose-pagination --save

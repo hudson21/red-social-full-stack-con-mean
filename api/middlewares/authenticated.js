@@ -25,7 +25,7 @@ exports.ensureAuth = function(req, res, next){//Request, Response, Next es salta
 		return res.status(404).send({message:'El token no es válido'});
 	}
 
-	//En los controladores tenría acceso al req.user
+	//En los controladores tendría acceso al req.user
 	req.user = payload;
 
 	//Saltar a la siguiente acción 	que tenga node.js
