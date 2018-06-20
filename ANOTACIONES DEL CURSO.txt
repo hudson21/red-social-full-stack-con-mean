@@ -57,3 +57,13 @@ arquitecturas en desarrollo de aplicaciones más comunes que facilita la funcion
 
 *********************************(Instalar Mongoose Pagination)*********************************
 +Dentro de api/ npm install mongoose-pagination --save
+
+
+***************************************
++ El index.js es para hacer las conexiones con la base de datos 
++ El app.s es para llevar carga de ficheros, configuraciones, etc.
+
++ Averiguar sobre el método de populate en mongoDB
+
+**************************************(Async y Await)************************************
++ 

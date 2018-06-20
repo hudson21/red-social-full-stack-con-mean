@@ -6,6 +6,7 @@ var path = require('path');
 
 //Importar el modelo de user
 var User = require('../models/user');
+var Follow = require('../models/follow');
 var jwt = require('../services/jwt');
 
 //Ruta de HOME
@@ -94,7 +95,7 @@ function loginUser(req,res){
 			//comparar las contraseñas con bcrypt
 			bcrypt.compare(password, user.password, (err, check)=>{
 				if(check){
-					//Devolver datos de usuario
+					//Devolver datos de usuario si viene dentro  de la URL
 					if(params.gettoken){
 						//Generar y devolver el token
 						return res.status(200).send({
@@ -130,7 +131,14 @@ function getUser(req, res){
 
 		if(!user) return res.status(404).send({message:'El usuario no existe'});
 
-		return res.status(200).send({user});
+		//Hacer una consulta para ver si el usuario al que buscamos lo seguimos
+		Follow.findOne({"user":req.user.sub, "followed":userId}).exec((err, follow)=>{
+			if(err) return res.status(500).send({message:'Error al comprobar el seguimiento'});
+
+			return res.status(200).send({user, follow});
+		});
+
+		
 	});
 }
 
@@ -139,6 +147,7 @@ function getUsers(req, res){
 	//Recoger el id del usuario que esté logueado. Lo obetemos del usuario que se ha decodificado el
 	//token por el middleware de autenticación
 
+	//Este req.user es enviado desde el archivo de autenticación authenticated.js en los middlewares
 	var identity_user_id = req.user.sub;//Accedo a la propiedad sub del payload guardado
 
 	var page = 1;
