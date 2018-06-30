@@ -1,4 +1,4 @@
-'use strict'
+	'use strict'
 
 //var path = require('path');//Llamamos a la librería path
 //var fs = require('fs');

@@ -66,4 +66,11 @@ arquitecturas en desarrollo de aplicaciones más comunes que facilita la funcion
 + Averiguar sobre el método de populate en mongoDB
 
 **************************************(Async y Await)************************************
-+ 
++ Las funciones síncronas hay que esperar a que finalicen
+
++ var following = await Follow.findOne({"user":identity_user_id, "followed":user_id}).exec((err, follow)=>{
+		//El handleError es un método de node.js para devolver error por consola
+		if(err) return handleError(err);
+		return follow;
+	});
+

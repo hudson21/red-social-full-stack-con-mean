@@ -131,15 +131,52 @@ function getUser(req, res){
 
 		if(!user) return res.status(404).send({message:'El usuario no existe'});
 
-		//Hacer una consulta para ver si el usuario al que buscamos lo seguimos
-		Follow.findOne({"user":req.user.sub, "followed":userId}).exec((err, follow)=>{
-			if(err) return res.status(500).send({message:'Error al comprobar el seguimiento'});
-
-			return res.status(200).send({user, follow});
+		//userId --> Es el que le pasamos por la URL
+		//req.user.sub --> Es el que nos regresa el JWT decoded
+		followThisUser(req.user.sub, userId).then((value) =>{
+			user.password = undefined;
+			return res.status(200).send({
+				user, 
+				following: value.following,
+				followed: value.followed
+			});
 		});
 
 		
 	});
+}
+
+//Función Asíncrona (Lo que permite ejecutarla en cualquier otro método)
+async function followThisUser(identity_user_id, user_id){
+	try {
+		//Obetener los usuarios a los que seguimos
+        var following = await Follow.findOne({ user: identity_user_id, followed: user_id}).exec()
+            .then((following) => {
+                console.log(following);
+                return following;
+            })
+            .catch((err)=>{
+                return handleerror(err);
+			});
+		
+		//Obetener los usuarios que nos siguen a nosotros
+        var followed = await Follow.findOne({ user: user_id, followed: identity_user_id}).exec()
+            .then((followed) => {
+                console.log(followed);
+                return followed;
+            })
+            .catch((err)=>{
+                return handleerror(err);
+			});
+			
+        return {
+            following: following,
+            followed: followed
+		}
+		
+    } catch(e){
+        console.log(e);
+    }
 }
 
 //Método para devolver un listado de usuarios paginados
@@ -210,20 +247,20 @@ function uploadImage(req, res){
 	if(req.files){
 
 		var file_path = req.files.image.path;
-		//console.log(file_path);
+		console.log(file_path);
 
 		var file_split = file_path.split('\\');// (\) Para escapar el caracter (\) Para separarlo por ese mismo
-		//console.log(file_split);
+		console.log(file_split);
 
 		var file_name = file_split[2];//Cargamos la posición donde se encuentra el nombre de la imagen
-		//console.log(file_name);
+		console.log(file_name);
 
-		//Quiero cortar por el punto
+		//Quiero cortar por el punto para obtener la extensión de la imagen
 		var ext_split = file_name.split('\.');
-		//console.log(ext_split);
+		console.log(ext_split);
 
 		var file_ext = ext_split[1];
-		//console.log(file_ext);
+		console.log(file_ext);
 
 		//Verificar si el id del usuario logueado es igual al id del usuario al que se le quiere subir el avatar 
 		if(userId != req.user.sub){
@@ -231,7 +268,9 @@ function uploadImage(req, res){
 		}
 
 		//Comprobar que la extensión de la imagen sea JPG
-		if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif'){
+		if(file_ext == 'png' || file_ext == 'PNG' || file_ext == 'jpg' 
+		|| file_ext == 'JPG' || file_ext == 'jpeg' || file_ext == 'JPEG' 
+		|| file_ext == 'gif' || file_ext == 'GIF'){
 			//Actualizar documento de usuario logueado
 			User.findByIdAndUpdate(userId, {image: file_name}, {new:true}, (err, userUpdated)=>{
 				if(err) return res.status(500).send({message:'Error en la petición'});
