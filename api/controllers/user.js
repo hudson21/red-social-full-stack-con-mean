@@ -146,10 +146,10 @@ function getUser(req, res){
 	});
 }
 
-//Función Asíncrona (Lo que permite ejecutarla en cualquier otro método)
+//Función Asíncrona para getUser (Lo que permite ejecutarla en cualquier otro método)
 async function followThisUser(identity_user_id, user_id){
 	try {
-		//Obetener los usuarios a los que seguimos
+		//Obetener el usuario al que seguimos
         var following = await Follow.findOne({ user: identity_user_id, followed: user_id}).exec()
             .then((following) => {
                 console.log(following);
@@ -159,7 +159,7 @@ async function followThisUser(identity_user_id, user_id){
                 return handleerror(err);
 			});
 		
-		//Obetener los usuarios que nos siguen a nosotros
+		//Obetener el usuario que nos sigue
         var followed = await Follow.findOne({ user: user_id, followed: identity_user_id}).exec()
             .then((followed) => {
                 console.log(followed);
@@ -202,13 +202,67 @@ function getUsers(req, res){
 
 		if(!users) return res.status(404).send({message: 'No hay usuarios disponibles'});
 
-		return res.status(200).send({
-		 users,
-		 total,
-		 //Me hace un redondeo del total de las páginas/usuarios por página
-		 pages: Math.ceil(total/itemsPerPage)
-		}); 
+		followUserIds(identity_user_id).then((value) =>{
+			return res.status(200).send({
+				users,
+				users_following: value.following,
+				users_follow_me: value.followed,
+				total,
+				//Me hace un redondeo del total de las páginas/usuarios por página
+				pages: Math.ceil(total/itemsPerPage)
+			});
+		});
+
+		 
 	});
+}
+
+//Función Asíncrona para getUsers
+async function followUserIds(user_id){
+
+ try{
+	//Obejter los usuarios que seguimos			 //El select es para mostrar los campos que yo quiera
+	var following = await Follow.find({'user':user_id }).select({'_id':0, '__v':0, 'user': 0}).exec()
+		.then((following) =>{
+			var follows_clean = [];
+
+			following.forEach((follow) =>{
+				//console.log("followed", follow.followed);
+				//Guardar los usuarios que yo sigo
+				follows_clean.push(follow.followed);
+			});
+
+			return follows_clean;
+		})
+		.catch((err)=>{
+			return handleerror(err);
+		});
+
+	//Obejter los usuarios que seguimos			 //El select es para mostrar los campos que yo quiera
+	var followed = await Follow.find({'followed':user_id }).select({'_id':0, '__v':0, 'followed': 0}).exec()
+		.then((following) =>{
+			var follows_clean = [];
+
+			following.forEach((follow) =>{
+				//console.log("user", follow.user);
+				//Guardar los usuarios que yo sigo
+				follows_clean.push(follow.user);
+			});
+
+			return follows_clean;
+		})
+		.catch((err)=>{
+			return handleerror(err);
+		});
+
+	return {
+		following: following,
+		followed: followed
+	}
+ }catch(e){
+	console.log(e);
+}
+	
 }
 
 //Método para actualizar los datos de un usuario
