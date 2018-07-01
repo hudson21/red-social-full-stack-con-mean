@@ -152,7 +152,7 @@ async function followThisUser(identity_user_id, user_id){
 		//Obetener el usuario al que seguimos
         var following = await Follow.findOne({ user: identity_user_id, followed: user_id}).exec()
             .then((following) => {
-                console.log(following);
+                //console.log(following);
                 return following;
             })
             .catch((err)=>{
@@ -162,7 +162,7 @@ async function followThisUser(identity_user_id, user_id){
 		//Obetener el usuario que nos sigue
         var followed = await Follow.findOne({ user: user_id, followed: identity_user_id}).exec()
             .then((followed) => {
-                console.log(followed);
+                //console.log(followed);
                 return followed;
             })
             .catch((err)=>{
@@ -263,6 +263,53 @@ async function followUserIds(user_id){
 	console.log(e);
 }
 	
+}
+
+//Función para contar los seguidores y a los que seguimos
+function getCounters(req, res){
+	var userId = req.user.sub; 
+
+	if(req.params.id){
+		userId = req.params.id;
+	}
+	getCountFollow(userId).then((value) =>{
+		return res.status(200).send(value);
+	});
+	
+}
+
+//Función Asíncrona para getCounters
+async function getCountFollow(user_id){
+
+   try{
+	    //Llamadas síncronas
+		//Variable para conseguir a los usuarios que seguimos
+		var following = await Follow.count({'user': user_id}).exec()
+			.then((following) =>{
+				return following;
+			})
+			.catch((err) =>{
+				return handleerror(err);
+			});
+
+		//Variable para consguir a los usuarios que nos siguen
+		var followed = await Follow.count({'followed':user_id}).exec()
+			.then((followed) =>{
+				return followed;
+			})
+			.catch((err) =>{
+				return handleerror(err);
+			});
+
+		return {
+			following: following,
+			followed: followed
+		}
+
+	}catch(e){
+	   console.log(e);
+	}
+
 }
 
 //Método para actualizar los datos de un usuario
@@ -377,7 +424,9 @@ module.exports = {
 	loginUser,
 	getUser,
 	getUsers,
+	getCounters,
 	updateUser,
 	uploadImage,
 	getImageFile
+	
 };
