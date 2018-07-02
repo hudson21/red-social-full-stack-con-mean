@@ -7,6 +7,7 @@ var path = require('path');
 //Importar el modelo de user
 var User = require('../models/user');
 var Follow = require('../models/follow');
+var Publication = require('../models/publication');
 var jwt = require('../services/jwt');
 
 //Ruta de HOME
@@ -301,9 +302,19 @@ async function getCountFollow(user_id){
 				return handleerror(err);
 			});
 
+		//Variable para los publicaciones para obtener las publicaciones de los usuarios a los que seguimos
+		var publications = await Publication.count({'user':user_id}).exec()
+			.then((publications) =>{
+				return publications
+			})
+			.catch((err) =>{
+				return handleerror(err);
+			});
+
 		return {
 			following: following,
-			followed: followed
+			followed: followed,
+			publications: publications
 		}
 
 	}catch(e){
