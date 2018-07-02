@@ -1,0 +1,23 @@
+/*EDITAR LA CABECERA*/
+.navegacion{
+    padding:0px !important;
+}
+
+.navegacion .navbar-default{
+    background:#e53c37 !important ; 
+    border-radius: 0px !important;
+    border:none;
+}
+
+.navegacion .navbar-default *{
+    color:white !important;
+    margin:2px !important;
+}
+
+.tamaño-letra{
+    font-size:20px;
+}
+
+.navbar-header a{
+    font-size:25px;
+}

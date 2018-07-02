@@ -74,3 +74,18 @@ arquitecturas en desarrollo de aplicaciones más comunes que facilita la funcion
 		return follow;
 	});
 
+
+****************************************(ANGULAR)*********************************************
++ Instalar librerías externas dentro de angular --> npm update para actualizar las dependencias del
+package.json
++angular-cli.json = angular.json
++ Dentro de angular.json ->
+	"styles": [
+              "src/assets/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
++ 
