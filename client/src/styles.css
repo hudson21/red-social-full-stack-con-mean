@@ -1,6 +1,7 @@
 /*EDITAR LA CABECERA*/
 .navegacion{
     padding:0px !important;
+    
 }
 
 .navegacion .navbar-default{
@@ -11,13 +12,13 @@
 
 .navegacion .navbar-default *{
     color:white !important;
-    margin:2px !important;
+    margin:1px !important;
 }
 
 .tamaño-letra{
-    font-size:20px;
+    font-size:18px;
 }
 
 .navbar-header a{
-    font-size:25px;
+    font-size:22px;
 }
