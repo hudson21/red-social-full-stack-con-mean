@@ -1,11 +1,30 @@
-/*EDITAR LA CABECERA*/
+/*****************************************GENERALES*****************************************/
+.h1-strong{
+    font-size:35px;
+    font-weight:bold;
+    margin-left:13px;
+    margin-bottom:20px;
+    border-bottom:1px solid #eee;
+    padding-bottom: 15px;
+}
+/*******************************************************************************************/
+
+body{
+    background: url('./app/login/bg2.jpg');
+    -webkit-background-size:cover;
+    background-size:cover;
+    background-attachment: fixed;
+    font-family: 'Roboto', sans-serif;
+}
+
+/*************************************EDITAR LA CABECERA********************************************/
 .navegacion{
     padding:0px !important;
-    
+    margin-top:0px;
 }
 
 .navegacion .navbar-default{
-    background:#e53c37 !important ; 
+    background:#456ad1 !important ; 
     border-radius: 0px !important;
     border:none;
 }
@@ -22,3 +41,4 @@
 .navbar-header a{
     font-size:22px;
 }
+/***************************************************************************************************/

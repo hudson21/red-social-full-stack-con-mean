@@ -89,3 +89,9 @@ package.json
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
 + 
+
++ Que es un servicio en angular: Una clase con un conjunto de métodos que van a interactuar con un 
+ servicio REST. (Hacer peticiones ajax a una API)
+
+ ******************************(Error con el Observable)**************************************
+ + npm install --save rxjs-compat
