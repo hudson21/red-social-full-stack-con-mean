@@ -1,4 +1,14 @@
 <div class="col-lg-12">
+
+      <div class="alert alert-success" *ngIf="status == 'success'">
+        <p class="text-center">Te has identificado correctamente, ¡¡¡¡¡BIENVENIDO :-)!!!!</p>
+        
+      </div>
+    
+      <div class="alert alert-danger" *ngIf="status == 'error'">
+        <p class="text-center">No te has podido identificar correctamente. Verifique su email o contraseña</p>
+      </div>
+
     <div class="contenedor-form ">
         <div class="toggle" >
           <span> <a style="color:white; text-decoration:none;" [routerLink]="['/registro']">Crear Cuenta</a></span>
@@ -6,10 +16,21 @@
   
         <div class="formulario">
           <h2>Iniciar Sesión</h2>
-          <form >
-            <input type="text" placeholder="Usuario" required>
-            <input type="password" placeholder="Contraseña" required>
-            <input type="submit" value="Iniciar Sesión">
+          <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+
+            <input type="email" placeholder="Correo Electrónico" 
+            name="email" #email="ngModel" [(ngModel)]="user.email" 
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"required>
+            <span *ngIf="!email.valid && email.touched">
+              El email no es correcto
+            </span>
+            <input type="password" placeholder="Contraseña"
+            name="password" #password="ngModel" [(ngModel)]="user.password" required>
+            <span *ngIf="!password.valid && password.touched">
+              La contraseña es obligatoria 
+            </span>
+
+            <input type="submit" value="Iniciar Sesión" [disabled]="!loginForm.form.valid">
           </form>
         </div>
         

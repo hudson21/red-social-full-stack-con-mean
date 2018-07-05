@@ -6,16 +6,21 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';//Módulo para hacer peticiones ajax y http a una api
 import { routing, appRoutingProviders } from './app.routing';
 
+import { UserService } from './user.service';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { UserService } from './user.service';
+import { HomeComponent } from './home/home.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [//Cargar módulos
     BrowserModule,

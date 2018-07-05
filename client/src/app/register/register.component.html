@@ -22,35 +22,48 @@
                 dentro del objeto user -->
             <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" 
             class="input-48" required placeholder="Nombre">
-            <span *ngIf="!name.valid && name.touched">
-              El nombre es obligatorio
-            </span>
-          
+
             <input type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname" 
             class="input-48" placeholder="Apellidos" required>
-            <span *ngIf="!surname.valid && surname.touched">
-              Los apellidos son obligatorios
-            </span>
+            
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-6">
+                    <span class="white" *ngIf="!name.valid && name.touched">
+                        El nombre es obligatorio
+                      </span>
+                </div>
+                <div class="col-lg-6">
+                    <span class="white" *ngIf="!surname.valid && surname.touched">
+                        Los apellidos son obligatorios
+                      </span>
+                </div>
+              </div>
+            </div>
+            
+            
         
             <input type="text" name="nick" #nick="ngModel" [(ngModel)]="user.nick" 
             class="input-100" placeholder="Apodo (Nickname)" required>
-            <span *ngIf="!nick.valid && nick.touched">
+            <span class="white" *ngIf="!nick.valid && nick.touched">
               El apodo es obligatorio
             </span>
         
             <input type="email" name="email" #email="ngModel" [(ngModel)]="user.email" 
             class="input-100"  placeholder="Correo Electrónico" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
-            <span *ngIf="!email.valid && email.touched" >
+            <span class="white" *ngIf="!email.valid && email.touched" >
               El correo electrónico no es válido
             </span>
           
             <input type="password" name="password" #password="ngModel" [(ngModel)]="user.password" 
             class="input-100" placeholder="Contraseña" required>
-            <span *ngIf="!password.valid && password.touched">
-              La contraseña es obligatoria
-            </span>
-          
-            <br>
+            
+            <div class="col-lg-12">
+                <span class="white" *ngIf="!password.valid && password.touched">
+                    La contraseña es obligatoria
+                  </span>
+            </div>
+            <br><br>
           <!--EL botón va a estar deshabilitado cuando el formulario no esté validado correctamente-->
           <input type="submit" value="{{ title }}" class=" btn-enviar" 
             [disabled]="!registerForm.form.valid">

@@ -6,27 +6,76 @@
         <a href="#" class="navbar-brand tamaño-letra-brand" >{{ title }}</a>
       </div>
 
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" *ngIf="identity">
         <li>
-          <a href="#" class="tamaño-letra">
+          <a [routerLink]="['/home']" [routerLinkActive]="['active']" class="links tamaño-letra">
            <span class="glyphicon glyphicon-home"></span>
            Inicio
           </a>
         </li>
 
         <li>
-          <a href="#" class="tamaño-letra">
+          <a href="#" [routerLinkActive]="['active']" class="links tamaño-letra">
             <span class="glyphicon glyphicon-th-list"></span>
             Timeline
           </a>
         </li>
 
         <li>
-          <a href="#" class="tamaño-letra">
+          <a href="#" [routerLinkActive]="['active']" class="links tamaño-letra">
             <span class="glyphicon glyphicon-user"></span>
             Usuarios
           </a>
         </li>
+      </ul>
+
+      <ul class=" nav navbar-nav navbar-right" *ngIf="!identity">
+          <li>
+              <a [routerLink]="['/login']" [routerLinkActive]="['active']" class="links tamaño-letra">
+               <span class="glyphicon glyphicon-log-in"></span>
+               Login
+              </a>
+            </li>
+    
+            <li>
+              <a [routerLink]="['/registro']" [routerLinkActive]="['active']" class="links tamaño-letra">
+                <span class="glyphicon glyphicon-user"></span>
+               Registro
+              </a>
+            </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" *ngIf="identity">
+          <li class="avatar">
+            <!--Cargar Imagen de usuario-->
+          </li>
+          <li class="dropdown">
+            <a class="links tamaño-letra dropdown-toggle" data-toggle="dropdown" href="#">
+              {{ identity.name }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="tamaño-letra" href="#">
+                  <span class="glyphicon glyphicon-user"></span>
+                  Mi Perfil
+                </a>
+              </li>
+
+              <li>
+                <a class="tamaño-letra" href="#">
+                   <span class="glyphicon glyphicon-cog"></span>
+                  Mis Datos
+                </a>
+              </li>
+
+              <li>
+                  <a class="tamaño-letra" href="#">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    Cerrar Sesión
+                  </a>
+                </li>
+            </ul>
+          </li>
       </ul>
 
     </div>

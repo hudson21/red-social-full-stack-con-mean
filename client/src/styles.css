@@ -7,6 +7,10 @@
     border-bottom:1px solid #eee;
     padding-bottom: 15px;
 }
+
+.active{
+    background: #ff851b;
+}
 /*******************************************************************************************/
 
 body{
@@ -29,6 +33,11 @@ body{
     border:none;
 }
 
+.links:hover{
+    background: #ff851b !important;
+    transition:all 0.2s ease;
+}
+
 .navegacion .navbar-default *{
     color:white !important;
     margin:1px !important;
@@ -40,5 +49,18 @@ body{
 
 .navbar-header a{
     font-size:22px;
+}
+
+.navegacion .dropdown-menu *{
+    color:black !important;
+    background: white;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus{
+    background: #ff851b !important; 
+}
+
+.navegacion .navbar-default .dropdown-menu a:hover{
+    background: #eee !important; 
 }
 /***************************************************************************************************/

@@ -1,6 +1,11 @@
 /**********************************FORMULARIO DE REGISTRO************************************/
 *{
     box-sizing: border-box;
+    font-family:Roboto;
+}
+
+.white{
+    color:white;
 }
 
 body{
@@ -32,6 +37,20 @@ body{
     flex-wrap: wrap;
     justify-content: space-between;
 }
+.contenedor-inputs input[type="text"],
+.contenedor-inputs input[type="password"],
+.contenedor-inputs input[type="email"]{
+    
+    border-bottom: 4px solid #0075d9;
+    font-family:Roboto;
+    transition:all .7s ease;
+}
+
+.contenedor-inputs input[type="text"]:focus,
+.contenedor-inputs input[type="password"]:focus,
+.contenedor-inputs input[type="email"]:focus{
+    border-bottom:4px solid crimson;
+}
 
 input{
     margin-bottom:15px !important;
@@ -47,6 +66,24 @@ input{
     width:100%;
 }
 .btn-enviar{
+    background: crimson;
+    color:#fff;
+    border:none;
+    width: 100%;
+    height:50px;
+    padding:10px 0;
+    font-weight: normal;
+    font-family: Roboto;
+    letter-spacing: 1px;
+    font-size: 18px;
+    cursor:pointer;
+    transition: all .5s ease;
+}
+.btn-enviar:hover{
+    background: #0075d9;
+}
+
+/*.btn-enviar{
     background:crimson;
     color:#fff;
     margin:auto;
@@ -56,7 +93,7 @@ input{
 } 
 .btn-enviar:active{
     transform: scale(1.05);
-} 
+} */
 .form-link{
     width: 100%;
     margin:7px;
