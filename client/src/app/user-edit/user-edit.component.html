@@ -40,11 +40,20 @@
            <span class="white" *ngIf="!email.valid && email.touched" >
               El correo electrónico no es válido
             </span>
-
-            <p>
-              <label class="white"> Sube tu avatar</label>
-              <input type="file" placeholder="Subir Imagen">
-            </p><br>
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-8 " *ngIf="user.image">
+              <img src="{{ url + 'get-image-user/' + user.image }}" class="img-responsive img-thumbnail" >
+            </div>
+            <div class="col-lg-2">
+            </div>
+            <div style="margin-bottom:10px" class="col-lg-12">
+              <p>
+                <label class="white"> Sube tu avatar</label>
+                <input type="file" placeholder="Subir Imagen" (change)="fileChangeEvent($event)">
+              </p>
+            </div>
+            
 
           <input type="submit" value="Actualizar Datos" [disabled]="!userEditForm.form.valid">
         </form>

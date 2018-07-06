@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { UsersComponent } from './users/users.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    UserEditComponent
+    UserEditComponent,
+    UsersComponent
   ],
   imports: [//Cargar módulos
     BrowserModule,
