@@ -1,4 +1,5 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from './user.service'; 
 
 @Component({
@@ -12,7 +13,9 @@ export class AppComponent implements OnInit, DoCheck{
  public identity;
  
  constructor(
-   private _userService: UserService
+   private _userService: UserService,
+   private _route: ActivatedRoute,
+   private _router: Router
  ){
    this.title  = 'NGSOCIAL';
  }
@@ -24,6 +27,12 @@ export class AppComponent implements OnInit, DoCheck{
  //El ngDoCheck me sirve para poder refrescar en tiempo real las variables de mi aplicación
  ngDoCheck(){
    this.identity = this._userService.getIdentity();
+ }
+
+ logout(){
+   localStorage.clear();
+   this.identity = null;
+   this._router.navigate(['/']);
  }
 
 }

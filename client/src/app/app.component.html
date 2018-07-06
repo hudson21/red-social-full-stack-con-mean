@@ -62,14 +62,14 @@
               </li>
 
               <li>
-                <a class="tamaño-letra" href="#">
+                <a class="tamaño-letra" [routerLink]="['/mis-datos']">
                    <span class="glyphicon glyphicon-cog"></span>
                   Mis Datos
                 </a>
               </li>
 
               <li>
-                  <a class="tamaño-letra" href="#">
+                  <a class="tamaño-letra pointer" href="#" (click)="logout()">
                     <span class="glyphicon glyphicon-log-out"></span>
                     Cerrar Sesión
                   </a>

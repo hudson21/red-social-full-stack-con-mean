@@ -338,16 +338,33 @@ function updateUser(req,res){
 	if(userId != req.user.sub){
 		return res.status(500).send({message:'No tienes permiso para actualizar los datos del usuario'});
 	}
-	//Buscar el usuario por ID y actualizarlo en la BD
-	//La propiedad new es para regresarme el objeto actualizado
-	User.findByIdAndUpdate(userId, update, {new:true}, (err, userUpdated)=>{
-		if(err) return res.status(500).send({message:'Error en la petición'});
 
-		if(!userUpdated) return res.status(404).send({message:'No se ha podido actualizar el usuario'});
-		
-		return res.status(200).send({user: userUpdated});
-	});
+	User.find({ $or:[
+					{email:update.email.toLowerCase()},
+					{nick:update.nick.toLowerCase()}
+					//El método exec es para ejecutar el callback
+	]}).exec((err, users) =>{
 
+		var user_isset = false;
+
+		users.forEach((user) =>{
+			//Verificar si el usuario logueado es el mismo a actualizar
+			if(user && (user._id != userId))  user_isset = true;
+		});
+
+		//Enviar solo una cabecera que verifica si el usuario logueado es el mismo a actualizar
+		if(user_isset) return res.status(500).send({message:'Los datos ya están en uso'});
+
+		//Buscar el usuario por ID y actualizarlo en la BD
+		//La propiedad new es para regresarme el objeto actualizado
+		User.findByIdAndUpdate(userId, update, {new:true}, (err, userUpdated)=>{
+			if(err) return res.status(500).send({message:'Error en la petición'});
+
+			if(!userUpdated) return res.status(404).send({message:'No se ha podido actualizar el usuario'});
+			
+			return res.status(200).send({user: userUpdated});
+		});
+	})
 }
 
 //Método para subir archivos de imagen/avatar de usuario

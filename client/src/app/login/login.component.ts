@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../models/user';
 import { UserService } from '../user.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
       private _userService: UserService
   ) {
     this.titleLogin = 'Identificate';
-    this.user = new User( "","","","","","","ROLE_USER","","");//Inicializamos el objeto de User
+    this.user = new User( "","","","","","","ROLE_USER","");//Inicializamos el objeto de User
    }
 
   ngOnInit() {
@@ -34,19 +35,16 @@ export class LoginComponent implements OnInit {
     this._userService.signup(this.user).subscribe(
         response =>{
             this.identity = response.user;
-            console.log(this.identity);
 
             if(!this.identity || !this.identity._id){
                 this.status = 'error';
             }else{
-              this.status = 'success';
               //Guardar datos del usuario en el localStorage
               localStorage.setItem('identity', JSON.stringify(this.identity));
 
               //Conseguir el token
               this.getToken();
             } 
-            this.status = 'success';
         },
         error =>{
             var errorMessage = <any>error;
@@ -66,14 +64,12 @@ export class LoginComponent implements OnInit {
           if(this.token.length <= 0){
               this.status = 'error';
           }else{
-            this.status = 'success';
-            console.log(this.token);
             //Persistir el token del usuario (localStorage)
             localStorage.setItem('token', this.token);
             
             //Conseguir los contadores o estadísticas del usuario
-
-          
+            this.getCounters();
+            
           }
       },
       error =>{
@@ -84,7 +80,20 @@ export class LoginComponent implements OnInit {
           }
       }
     );
-  
+  }
+
+  getCounters(){
+      this._userService.getCounters().subscribe(
+          response =>{
+            localStorage.setItem('stats',JSON.stringify(response));
+            this.status = 'success';
+            //Redirección a la página home
+            this._router.navigate(['/']);
+          },
+          error =>{
+              console.log(<any>error);
+          }
+      );
   }
 
 }

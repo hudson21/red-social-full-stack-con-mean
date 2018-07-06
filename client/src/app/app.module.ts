@@ -7,12 +7,13 @@ import { HttpClientModule } from '@angular/common/http';//Módulo para hacer pet
 import { routing, appRoutingProviders } from './app.routing';
 
 import { UserService } from './user.service';
+import { UploadService } from './upload.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
-
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { HomeComponent } from './home/home.component';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    UserEditComponent
   ],
   imports: [//Cargar módulos
     BrowserModule,
@@ -30,7 +32,8 @@ import { HomeComponent } from './home/home.component';
   ],
   providers: [
     appRoutingProviders,
-    UserService
+    UserService,
+    UploadService
   ], //En los providers cargamos servicios
   bootstrap: [AppComponent]
 })
