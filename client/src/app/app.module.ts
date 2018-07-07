@@ -8,6 +8,7 @@ import { routing, appRoutingProviders } from './app.routing';
 
 import { UserService } from './user.service';
 import { UploadService } from './upload.service';
+import { FollowService} from './follow.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -35,7 +36,8 @@ import { UsersComponent } from './users/users.component';
   providers: [
     appRoutingProviders,
     UserService,
-    UploadService
+    UploadService,
+    FollowService
   ], //En los providers cargamos servicios
   bootstrap: [AppComponent]
 })

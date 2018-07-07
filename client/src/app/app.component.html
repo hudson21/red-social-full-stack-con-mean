@@ -49,6 +49,8 @@
           <li>
               <!--Cargar Imagen de usuario-->
               <img class="avatar " *ngIf="identity && identity.image" src="{{ url + 'get-image-user/' + identity.image }}" alt="">
+              <img class="avatar " *ngIf="identity && !identity.image" src="../assets/avatar_default2.png" alt="">
+    
           </li>
 
           <li  class="dropdown">

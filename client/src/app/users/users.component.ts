@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../models/user';
 import { UserService } from '../user.service';
+import { FollowService } from '../follow.service';
 import { GLOBAL } from '../global';
+import { Follow } from '../models/follow';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
-  providers: [ UserService]
+  providers: [ UserService, FollowService]
 })
 export class UsersComponent implements OnInit {
   
@@ -28,7 +30,8 @@ export class UsersComponent implements OnInit {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private _userService: UserService
+    private _userService: UserService,
+    private _followService: FollowService
   ) { 
     this.title = 'Usuarios';
     this.identity = this._userService.getIdentity();
@@ -77,9 +80,10 @@ export class UsersComponent implements OnInit {
               this.total = response.total;
               this.users = response.users;
               this.pages = response.pages;
+              //Esta es la variable que voy a examinar en la vista para saber si sigo al usuario o no
               this.follows = response.users_following;
 
-              console.log(this.follows);
+              //console.log(this.follows);
 
               if(page > this.pages){
                   //Si es la última página que me redirija a la página 1 de los usuarios
@@ -97,6 +101,62 @@ export class UsersComponent implements OnInit {
           }
         }
       );
+  }
+
+  public followUserOver;
+  mouseEnter(user_id){
+    this.followUserOver = user_id;
+  }
+
+  mouseLeave(user_id){
+    //Lo dejo a 0 para poder tomar el _id de algún otro usuario al que quiera seguir
+    this.followUserOver = 0;
+  }
+
+  followUser(followed){
+    var follow = new Follow('',this.identity._id, followed);
+
+    this._followService.addFollow(this.token, follow).subscribe(
+      response =>{
+        if(!response.follow){
+          this.status = 'error';
+        }else{
+          this.status = 'success';
+          this.follows.push(followed);//Añadimos un nuevo id al array;
+        }
+      },
+      error =>{
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null){
+              this.status = 'error';
+        }
+      }
+    );
+  }
+
+  unfollowUser(followed){
+    this._followService.deleteFollow(this.token, followed).subscribe(
+      response =>{
+        //Recoger el _id de usuario y borrarlo del array de follows
+        var search = this.follows.indexOf(followed);//Búscame followed en el array de follows
+        //El resultado de indexOf es -1 cuando no encuentra el valor seleccionado en el array
+        if(search != -1){
+          //Utilizamos splice para eliminar el valor que encontró con el indexOf
+          this.follows.splice(search, 1);//El uno es para que solo elimine un solo elemento a partir de ese
+
+        }
+      },
+      error =>{
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null){
+              this.status = 'error';
+        }
+      }
+    );
   }
 
 }
