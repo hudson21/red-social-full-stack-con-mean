@@ -10,7 +10,12 @@
 *{
     font-family: Roboto;
 }
-
+.white{
+    color:white;
+}
+.black{
+    color:black;
+}
 .active{
     background: #ff851b;
 }
@@ -80,5 +85,32 @@ body{
 
 .navegacion .navbar-default .dropdown-menu a:hover{
     background: #eee !important; 
+}
+/***************************************************************************************************/
+
+/**********************IMAGENES DEL LOS USUARIOS EN LA PESTAÑA DE USUARIOS**************************/
+.item-user .image-user{
+    width: 75px;
+    height: 75px;
+    border-radius:100px;
+    overflow:hidden;/*Lo que se salga del li lo oculte*/
+    margin-right:15px;
+}
+.item-user .image-user img{
+    width: 120px;
+
+}
+.item-user .user-name{
+    margin-top:11px;
+}
+.item-user .user-name .nickname{
+    color:#969393;
+}
+.item-user .user-name .name-surname a{
+    color:#555;
+    font-weight: bold;
+}
+.avatar-default{
+    width:100% !important;
 }
 /***************************************************************************************************/
