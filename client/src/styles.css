@@ -89,19 +89,22 @@ body{
 /***************************************************************************************************/
 
 /**********************IMAGENES DEL LOS USUARIOS EN LA PESTAÑA DE USUARIOS**************************/
-.item-user .image-user{
+.item-user .image-user,
+.item-publication .image-user{
     width: 75px;
     height: 75px;
     border-radius:100px;
     overflow:hidden;/*Lo que se salga del li lo oculte*/
     margin-right:15px;
 }
-.item-user .image-user img{
+.item-user .image-user img,
+.item-publication .image-user img{
     width: 120px;
 
 }
-.item-user .user-name{
-    margin-top:11px;
+.item-user .user-name,
+.item-publication .user-name{
+    margin-top:10px;
 }
 .item-user .user-name .nickname{
     color:#969393;

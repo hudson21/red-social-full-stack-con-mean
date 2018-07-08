@@ -95,3 +95,13 @@ package.json
 
  ******************************(Error con el Observable)**************************************
  + npm install --save rxjs-compat
+ + npm install @types/jquery --save
+ + se in your component: import * as $ from 'jquery';// import Jquery here
+ + npm install --save angular2-moment
+ + Cargar el módulo de moments en app.module.ts 
+      ---> import { MomentModule } from 'angular2-moment';
+      y lo ponemos en la parte de imports
+
+ + Ejemplo del uso de un pipe
+      {{ (publication.created_at | amFromUnix)| amLocale:'es' | amTimeAgo }}
+ + 

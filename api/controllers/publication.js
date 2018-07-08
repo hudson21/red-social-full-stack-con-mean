@@ -61,12 +61,14 @@ function getPublications(req, res){
             //Meter los ids de los usuarios a los que seguimos 
             follows_clean.push(follow.followed);
         });
+        //De esta manera añado también mis publicaciones
+        follows_clean.push(req.user.sub);
         
         //Buscar las publicaciones de esos usuarios a los que sigo
         //Buscar todos los documentos cuyo usuario esté contenido dentro del array follows_clean
                                  //$in es para buscar dentro de un array
         Publication.find({'user':{'$in': follows_clean }})
-            .sort('created_at')
+            .sort({created_at:'descending'})
             .populate('user')                               //Total de elementos que hay en las publicaciones
             .paginate(page, itemsPerPage, (err, publications, total)=>{
                 if(err) return res.status(500).send({message:'Error al devolver publicaciones'});
@@ -77,6 +79,7 @@ function getPublications(req, res){
                     total_items: total,
                     pages: Math.ceil(total/itemsPerPage),
                     page: page,
+                    items_per_page: itemsPerPage,
                     publications: publications
                 });
             }); 

@@ -58,8 +58,17 @@
 
 <!--FORMULARIO DE PUBLICACIONES-->
 <div id="new-publication" class="col-lg-4 pull-left panel panel-default">
+  
+  <div class="alert alert-success" *ngIf="status == 'success'">
+    <p class="text-center">Publicación enviada correctamente :-) !!!!</p>
+    
+  </div>
 
-  <form #newPubForm="ngForm" (ngSubmit)="onSubmit()" class="col-lg-10">
+  <div class="alert alert-danger" *ngIf="status == 'error'">
+    <p class="text-center">Publicación no enviada :-( !!!!</p>
+  </div>
+
+  <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm);sendPublication($event)" class="col-lg-10">
       <p>
         <label class="">¿Qué estas pensando hoy?</label>
         <textarea name="text" #text="ngModel" [(ngModel)]="publication.text" 
@@ -74,6 +83,6 @@
          <input type="file" placeholder="Subir imagen">
       </p>
 
-      <input type="submit" class="btn btn-success" value="Enviar" [disabled]="!newPubForm.form.valid">
+      <input style="font-size:15px" type="submit" class="btn btn-success" value="Enviar" [disabled]="!newPubForm.form.valid">
   </form>
 </div>

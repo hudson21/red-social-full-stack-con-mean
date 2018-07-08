@@ -7,6 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { UsersComponent } from './users/users.component';
+import { TimelineComponent } from './timeline/timeline.component';
 
 const appRoutes: Routes = [
     {
@@ -37,6 +38,10 @@ const appRoutes: Routes = [
     {
         path: 'usuarios',
         component: UsersComponent
+    },
+    {
+        path:'timeline',
+        component: TimelineComponent
     },
     {
         path: '**', //Esto hace referencia a alguna ruta que no exista
