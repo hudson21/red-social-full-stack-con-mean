@@ -42,8 +42,12 @@
             </span>
             <div class="col-lg-2">
             </div>
-            <div class="col-lg-8 " *ngIf="user.image">
+            <div class="col-lg-8 " *ngIf="user && user.image">
               <img src="{{ url + 'get-image-user/' + user.image }}" class="img-responsive img-thumbnail" >
+              
+            </div>
+            <div class="col-lg-8" *ngIf="user && !user.image">
+              <img src="../../assets/avatar_default2.png" class="img-responsive img-thumbnail" >
             </div>
             <div class="col-lg-2">
             </div>

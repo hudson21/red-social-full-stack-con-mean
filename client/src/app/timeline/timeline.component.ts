@@ -60,7 +60,7 @@ export class TimelineComponent implements OnInit {
             //Con el concat añado elementos a mi array (Concateno el contenido de arrayB en arrayA)
             this.publications = arrayA.concat(arrayB);
 
-            $("html, body").animate({scrollTop: $('body').prop("scrollHeight")}, 500);
+            $("html, body").animate({scrollTop: $('html').prop("scrollHeight")}, 500);
           }
         
           //Comprobar si la página actual > a this.pages

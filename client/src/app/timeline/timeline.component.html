@@ -37,9 +37,9 @@
                   </div>
         
                   <div>
-                      <span class="user-name tamaño-letra">
+                      <a [routerLink]="['/perfil',publication.user._id]" class="user-name tamaño-letra">
                         {{ publication.user.name + ' ' + publication.user.surname }}
-                      </span>
+                      </a>
         
                         &nbsp;<span class="tamaño-letra">|</span>&nbsp;
                         
@@ -58,7 +58,7 @@
             </div>
           </div>
         
-          <div class="col-lg-12 text-center">
+          <div class="col-lg-12 text-center" *ngIf="publications && publications.length">
             <p>
               <button class="btn btn-success" 
                 style="font-size:20px" (click)="viewMore()" *ngIf="!noMore">

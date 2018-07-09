@@ -4,12 +4,13 @@ import { GLOBAL } from '../global';
 import { Publication } from '../models/publication';
 import { PublicationService } from '../publication.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { UploadService } from '../upload.service';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
-  providers:[ UserService, PublicationService]
+  providers:[ UserService, PublicationService, UploadService]
 })
 export class SidebarComponent implements OnInit, DoCheck {
 
@@ -23,6 +24,7 @@ export class SidebarComponent implements OnInit, DoCheck {
   constructor(
     private _userService : UserService,
     private _publicationService: PublicationService,
+    private _uploadService: UploadService,
     private _router: Router,
     private _route: ActivatedRoute
   ) {
@@ -47,10 +49,19 @@ export class SidebarComponent implements OnInit, DoCheck {
       response =>{
         if(response.publication){
           //this.publication = response.publication;
-          this.status = 'success';
-          newPubForm.reset();//Reseteo el formulario y lo vacío 
-          this.getCounters();
-          this._router.navigate(['/timeline']);
+          
+          //Subir la Imagen
+          this._uploadService.makeFileRequest(this.url + 'upload-image-pub/'
+                                             +response.publication._id, [],
+                                             this.filesToUpload, this.token, 'image')
+                              .then((result:any) =>{
+                                 this.publication.file = result.image;
+
+                                 this.status = 'success';
+                                 newPubForm.reset();//Reseteo el formulario y lo vacío 
+                                 this.getCounters();
+                                 this._router.navigate(['/timeline']);
+                              });
         }else{
           this.status = 'error';
         }
@@ -66,6 +77,18 @@ export class SidebarComponent implements OnInit, DoCheck {
     );
   }
 
+  public filesToUpload: Array<File>;
+  fileChangeEvent(fileInput: any){
+    this.filesToUpload = <Array<File>>fileInput.target.files;
+  }
+
+  //Output
+  @Output() sent = new EventEmitter();//Esta propiedad va a poder emitir eventos
+  sendPublication(event){
+    //console.log(event);
+    this.sent.emit({send:'true'}) //Emito el evento
+  }
+
   getCounters(){
     this._userService.getCounters(this.identity._id).subscribe(
         response =>{
@@ -76,14 +99,4 @@ export class SidebarComponent implements OnInit, DoCheck {
         }
     );
   }
-
-
-  //Output
-  @Output() sent = new EventEmitter();//Esta propiedad va a poder emitir eventos
-  sendPublication(event){
-    //console.log(event);
-    this.sent.emit({send:'true'}) //Emito el evento
-  }
-
-
 }
