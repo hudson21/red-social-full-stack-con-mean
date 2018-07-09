@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { UsersComponent } from './users/users.component';
 import { TimelineComponent } from './timeline/timeline.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const appRoutes: Routes = [
     {
@@ -42,6 +43,10 @@ const appRoutes: Routes = [
     {
         path:'timeline',
         component: TimelineComponent
+    },
+    {
+        path:'perfil/:id',
+        component: ProfileComponent
     },
     {
         path: '**', //Esto hace referencia a alguna ruta que no exista

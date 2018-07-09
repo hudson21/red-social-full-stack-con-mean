@@ -21,6 +21,7 @@ import { UsersComponent } from './users/users.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { PublicationsComponent } from './publications/publications.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -34,7 +35,8 @@ import { PublicationsComponent } from './publications/publications.component';
     UsersComponent,
     SidebarComponent,
     TimelineComponent,
-    PublicationsComponent
+    PublicationsComponent,
+    ProfileComponent
   ],
   imports: [//Cargar módulos
     BrowserModule,

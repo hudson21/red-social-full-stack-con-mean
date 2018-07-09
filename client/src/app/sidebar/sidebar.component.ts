@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output} from '@angular/core';
 import { UserService } from '../user.service';
 import { GLOBAL } from '../global';
 import { Publication } from '../models/publication';
@@ -34,7 +34,7 @@ export class SidebarComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log("Cargado exitosamente el sidebar.component.ts :)")
+    console.log("Cargado exitosamente el sidebar.component.ts :)");
   }
 
   onSubmit(newPubForm){
@@ -44,7 +44,7 @@ export class SidebarComponent implements OnInit {
         if(response.publication){
           //this.publication = response.publication;
           this.status = 'success';
-          newPubForm.reset();//Reseteo el formulario y lo vacío
+          newPubForm.reset();//Reseteo el formulario y lo vacío 
           this._router.navigate(['/timeline']);
         }else{
           this.status = 'error';
@@ -60,6 +60,7 @@ export class SidebarComponent implements OnInit {
       }
     );
   }
+
 
   //Output
   @Output() sent = new EventEmitter();//Esta propiedad va a poder emitir eventos

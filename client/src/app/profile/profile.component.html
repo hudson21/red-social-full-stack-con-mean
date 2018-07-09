@@ -1,0 +1,31 @@
+<div class="col-lg-8">
+
+    <div *ngIf="!user" class="m-auto">
+      <div id="publications" style="min-height: 300px">
+        
+          <div class="text-center " style="margin-top:250px;font-size:75px">
+              <i class="fa fa-spinner fa-spin"></i>
+          </div>
+      </div>
+    </div>
+
+    <div *ngIf="user">
+        <h1 class="h1-strong white">{{ title }}</h1>
+
+        <div id="data-profile">
+          <div class="avatarPerfil pull-left">
+            <img src="{{ url + 'get-image-user/' + user.image }}" *ngIf="user.image">
+            <img src="../../assets/avatar_default2.png" *ngIf="!user.image">
+          </div>
+
+          <div class="user-name pull-left">
+              <p class="name">{{ user.name + ' ' + user.surname  }}</p>
+              <p class="nick">{{ user.nick }}</p>
+          </div>
+        </div>
+    </div>
+    
+
+</div>
+
+<app-sidebar (sent)="refresh($event)"></app-sidebar>

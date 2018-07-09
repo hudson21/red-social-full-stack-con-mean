@@ -25,7 +25,6 @@ export class TimelineComponent implements OnInit {
   public pages;
   public itemsPerPage;
   public publications: Publication[];
-  public noMore;
 
   constructor(
     private _router: Router,
@@ -38,7 +37,6 @@ export class TimelineComponent implements OnInit {
     this.token = this._userService.getToken();
     this.title = 'Timeline';
     this.page = 1;
-    this.noMore = false;
   }
 
   ngOnInit() {
@@ -84,6 +82,7 @@ export class TimelineComponent implements OnInit {
     );
   }
   
+  public noMore = false;
   viewMore(){
     this.page += 1;
     if(this.page == this.pages){

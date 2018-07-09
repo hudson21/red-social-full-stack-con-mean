@@ -1,5 +1,15 @@
-<div class="col-lg-8">
-  <h1 class="h1-strong white">{{ title }}</h1>
+<div class="col-lg-8" >
+
+  <div *ngIf="!users" class="m-auto">
+      <div id="publications" style="min-height: 300px">    
+        <div class="text-center " style="margin-top:250px;font-size:75px">
+              <i class="fa fa-spinner fa-spin "></i>
+        </div>
+      </div>
+  </div>
+
+  <div *ngIf="users" style="min-height: 500px;">
+      <h1 class="h1-strong white">{{ title }}</h1>
 
   <div class="people">
 
@@ -66,8 +76,7 @@
       <li *ngIf="pages != page"><a [routerLink]="['/usuarios', next_page]">Siguiente</a></li>
     </ul>
   </div>
-
-  
+  </div>
 
 </div>
 
