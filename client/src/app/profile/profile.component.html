@@ -19,13 +19,90 @@
           </div>
 
           <div class="user-name pull-left">
-              <p class="name">{{ user.name + ' ' + user.surname  }}</p>
-              <p class="nick">{{ user.nick }}</p>
+              <div style="font-size: 18px;" class="label label-default pull-left" *ngIf="followed">
+                 Te sigue
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="pull-left">
+                 <p class="name">{{ user.name + ' ' + user.surname  }}</p>
+                 <p class="nick">{{ user.nick }}</p>
+              </div>
+
+              <div class="clearfix"></div>
+              
+              <div class="follow pull-left">
+                <button class="btn btn-success tamaño-letra" 
+                *ngIf="!following" 
+                (click)="followUser(user._id)">
+                    Seguir
+                </button>
+
+                <button class="btn btn-primary tamaño-letra" 
+                *ngIf="following"
+                (click)="unfollowUser(user._id)"
+                (mouseenter)="mouseEnter(user._id)"
+                (mouseleave)="mouseLeave()"
+                [class.btn-danger]="user._id == followUserOver">
+                    <span *ngIf="user._id == followUserOver; else following">
+                        Dejar de Seguir
+                    </span>
+                    <ng-template #following>
+                        Siguiendo
+                    </ng-template>
+                    
+                </button>
+              </div>
+
           </div>
+
+          <div class="stats pull-left" *ngIf="stats">
+                <div class="following-data">
+                  <a href="#">
+                    <span class="label-stats">
+                       Siguiendo
+                    </span>
+                    <span class="number-stats">
+                      {{ stats.following }}
+                    </span>
+                  </a>
+                </div>
+            
+                <div class="following-data">
+                    <a href="#">
+                      <span class="label-stats">
+                         Seguidores
+                       </span>
+                      <span class="number-stats">
+                        {{ stats.followed }}
+                       </span>
+                    </a>
+                </div>
+            
+                <div class="following-data">
+                    <a href="#">
+                        <span class="label-stats">
+                          Publicaciones
+                        </span>
+                        <span class="number-stats">
+                          {{ stats.publications }}
+                        </span>
+                    </a>
+                </div>
+            
+              </div>
+
+              <div class="col-lg-12 publications" *ngIf="user">
+                    <!--Utilizar la etiqueta publications para pasarle una variable-->
+                    <app-publications [user]="user._id"></app-publications>    
+                </div>
+
         </div>
+ 
     </div>
     
 
 </div>
 
-<app-sidebar (sent)="refresh($event)"></app-sidebar>
+<app-sidebar></app-sidebar>

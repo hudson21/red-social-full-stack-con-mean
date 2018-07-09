@@ -1,0 +1,44 @@
+<div id="publications">
+        <div *ngFor="let publication of publications" class="item-publication">
+          <div class="panel panel-default">
+            <div class="panel-body">
+    
+              <div class="image-user pull-left">
+                  <a href="#">
+                    <img src="{{ url + 'get-image-user/' + publication.user.image }}" 
+                    *ngIf="publication.user.image" >
+                    <img class="avatar-default" src="../../assets/avatar_default2.png" 
+                    *ngIf="!publication.user.image" >
+                 </a>
+              </div>
+    
+              <div>
+                  <span class="user-name tamaño-letra">
+                    {{ publication.user.name + ' ' + publication.user.surname }}
+                  </span>
+    
+                    &nbsp;<span class="tamaño-letra">|</span>&nbsp;
+                    
+                  <span class="date tamaño-letra">
+                    {{ (publication.created_at | amFromUnix)| amLocale:'es' | amTimeAgo }} <!--adTimeAgo es una pipe(tubería) de moment-->
+                 </span>
+              </div>
+              
+            
+            <h4 style="font-weight:bold" class="publication-text pull-left">
+              {{ publication.text }}
+            </h4>
+    
+          </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-lg-12 text-center"  >
+        <p>
+          <button class="btn btn-success" 
+            style="font-size:20px" (click)="viewMore()" *ngIf="!noMore">
+            Ver más publicaciones
+          </button>
+        </p>
+      </div>

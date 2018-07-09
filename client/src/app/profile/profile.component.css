@@ -29,6 +29,27 @@
 }
 
 #data-profile .user-name{
+    margin-top:25px;
+}
+
+#data-profile .user-name .label{
+    margin-bottom: 15px;
+}
+
+#data-profile .stats{
+    border-left:4px solid #ccc;
+    margin-left:35px;
+    padding-left:25px;
+    height: 200px;
+} 
+
+#data-profile .stats a{
+    font-size:20px;
+    line-height: 35px;
+    color:#555;
+}
+
+#data-profile .publications{
     margin-top:40px;
 }
 /************************************************************************************************/

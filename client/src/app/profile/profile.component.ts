@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../models/user';
@@ -12,7 +12,7 @@ import { GLOBAL } from '../global';
   styleUrls: ['./profile.component.css'],
   providers:[UserService, FollowService]
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, DoCheck {
 
   public url:string;
   public title:string;
@@ -20,7 +20,8 @@ export class ProfileComponent implements OnInit {
   public identity;
   public token;
   public stats;
-  public follow;
+  public followed;
+  public following;
   public user:User;
 
   constructor(
@@ -33,12 +34,19 @@ export class ProfileComponent implements OnInit {
     this.title = "Perfil";
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.stats = this._userService.getStats();
+    this.followed = false;
+    this.following = false;
+    //
   }
 
   ngOnInit() {
     console.log('profile.component.ts cargado exitosamente :)');
     this.loadPage();
+    this.stats = this._userService.getStats();
+  }
+
+  ngDoCheck(){
+    //this.stats = this._userService.getStats();
   }
 
   loadPage(){
@@ -55,8 +63,23 @@ export class ProfileComponent implements OnInit {
     this._userService.getUser(user_id).subscribe(
       response =>{
         if(response.user){
-          //console.log(response);
+          console.log(response);
           this.user = response.user;
+
+          //Si hay un id dentro del campo de following
+          if(response.following && response.following._id){
+            this.following = true;
+          }else{
+            this.following = false;
+          }
+
+          //Si hay un id dentro del campo de followed
+          if(response.followed && response.followed._id){
+            this.followed = true;
+          }else{
+            this.followed = false;
+          }
+
         }else{
           this.status = 'error';
         }
@@ -74,14 +97,61 @@ export class ProfileComponent implements OnInit {
   }
 
   getCounters(user_id){
-    this._userService.getCounters(user_id).subscribe(
+      this._userService.getCounters(user_id).subscribe(
+        response =>{
+          this.stats = response;
+          localStorage.setItem('stats',JSON.stringify(this.stats));
+        },
+        error =>{
+          console.log(<any>error);
+        }
+      );
+  }
+
+  getCountersN(){
+    this._userService.getCounters().subscribe(
+        response =>{
+          localStorage.setItem('stats',JSON.stringify(response));
+        },
+        error =>{
+            console.log(<any>error);
+        }
+    );
+  }
+
+  followUser(followed){
+    var follow = new Follow('', this.identity._id,followed);
+
+    this._followService.addFollow(this.token, follow).subscribe(
       response =>{
-        this.stats = response;
+        this.following = true;
+        this.getCountersN();
       },
       error =>{
         console.log(<any>error);
       }
     );
+  }
+
+  unfollowUser(followed){
+    this._followService.deleteFollow(this.token, followed).subscribe(
+      response =>{
+        this.following = false;
+        this.getCountersN();
+      }, 
+      error =>{
+        console.log(<any>error);
+      }
+    );
+  }
+
+  public followUserOver;
+  mouseEnter(user_id){
+    this.followUserOver = user_id;
+  }
+
+  mouseLeave(){
+    this.followUserOver = 0;
   }
 
 }

@@ -86,6 +86,41 @@ function getPublications(req, res){
     });
 }
 
+//Método para devolver las publicaciones de un usuario en específico
+function getPublicationsUser(req, res){
+    //Recoger el parámetro de la página en la que estamos
+    var page = 1;
+    if(req.params.page){
+        page = req.params.page;
+    }
+
+    var user = req.user.sub;
+    if(req.params.user){
+        user = req.params.user;
+    }
+    //Establecer la cantidad de elementos por página
+    var itemsPerPage = 4;
+
+    
+    Publication.find({'user':user})
+        .sort('-created_at')
+        .populate('user')                               //Total de elementos que hay en las publicaciones
+        .paginate(page, itemsPerPage, (err, publications, total)=>{
+            if(err) return res.status(500).send({message:'Error al devolver publicaciones'});
+
+        if(!publications) return res.status(404).send({message:'No hay publicaciones'});
+
+        return res.status(200).send({
+            total_items: total,
+            pages: Math.ceil(total/itemsPerPage),
+            page: page,
+            items_per_page: itemsPerPage,
+            publications: publications
+        });
+    }); 
+    
+}
+
 //Método para devolver una publicación
 function getPublication(req, res){
     //Recoger el id de la publicación por la URL
@@ -193,6 +228,7 @@ module.exports = {
     probando,
     savePublication,
     getPublications,
+    getPublicationsUser,
     getPublication,
     deletePublication,
     uploadImage,

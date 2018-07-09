@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../models/user';
 import { UserService } from '../user.service';
@@ -12,7 +12,7 @@ import { Follow } from '../models/follow';
   styleUrls: ['./users.component.css'],
   providers: [ UserService, FollowService]
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, DoCheck {
   
   public title: string;
   public url: string;
@@ -26,6 +26,7 @@ export class UsersComponent implements OnInit {
   public users: User[];
   public follows;
   public status: string;
+  public stats;
 
   constructor(
     private _router: Router,
@@ -42,6 +43,11 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     console.log("Cargado con éxito el users.component.ts :)");
     this.actualPage();
+    this.stats = this._userService.getStats();
+  }
+
+  ngDoCheck(){
+    this.stats = this._userService.getStats();
   }
 
   //Coger la página actual en la que estamos
@@ -123,6 +129,8 @@ export class UsersComponent implements OnInit {
         }else{
           this.status = 'success';
           this.follows.push(followed);//Añadimos un nuevo id al array;
+          this.getCounters();
+
         }
       },
       error =>{
@@ -145,7 +153,7 @@ export class UsersComponent implements OnInit {
         if(search != -1){
           //Utilizamos splice para eliminar el valor que encontró con el indexOf
           this.follows.splice(search, 1);//El uno es para que solo elimine un solo elemento a partir de ese
-
+          this.getCounters();
         }
       },
       error =>{
@@ -156,6 +164,17 @@ export class UsersComponent implements OnInit {
               this.status = 'error';
         }
       }
+    );
+  }
+
+  getCounters(){
+    this._userService.getCounters().subscribe(
+        response =>{
+          localStorage.setItem('stats',JSON.stringify(response));
+        },
+        error =>{
+            console.log(<any>error);
+        }
     );
   }
 
