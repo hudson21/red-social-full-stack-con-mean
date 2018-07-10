@@ -22,6 +22,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { PublicationsComponent } from './publications/publications.component';
 import { ProfileComponent } from './profile/profile.component';
+import { FollowingComponent } from './following/following.component';
 
 
 
@@ -36,7 +37,8 @@ import { ProfileComponent } from './profile/profile.component';
     SidebarComponent,
     TimelineComponent,
     PublicationsComponent,
-    ProfileComponent
+    ProfileComponent,
+    FollowingComponent
   ],
   imports: [//Cargar módulos
     BrowserModule,
