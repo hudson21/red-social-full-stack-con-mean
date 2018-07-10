@@ -42,7 +42,7 @@ export class TimelineComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
-    console.log('Cargado exitosamente el timeline.component.ts :)');
+    //console.log('Cargado exitosamente el timeline.component.ts :)');
     this.getPublications(this.page);
     this.statsUser = this._userService.getStatsUser();
   }

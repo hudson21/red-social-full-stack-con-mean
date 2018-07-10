@@ -1,0 +1,39 @@
+<div class="col-lg-10">
+    <h2>{{ title }}</h2>
+
+    <div class="alert alert-success" *ngIf="status == 'success'">
+        <p class="text-center tamaño-letra">Has enviado el mensaje correctamente, 
+        míralo en <a [routerLink]="['/mensajes/enviados']">tus mensajes enviados</a>  </p>
+            
+    </div>
+        
+    <div class="alert alert-danger" *ngIf="status == 'error'">
+        <p class="text-center tamaño-letra">No se ha podido enviar el mensaje correctamente :-( !!!!!!</p>
+    </div>
+
+    <!--FORMULARIO PARA ENVIAR LOS MENSAJES-->
+    <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
+        <p>
+            <label class="tamaño-letra">Para:</label>
+            <!--LISTADO DE SEGUIDORES-->
+            <select *ngIf="follows" name="receiver" #receiver="ngModel" 
+            [(ngModel)]="message.receiver" class="form-control tamaño-letra" required>
+                <option *ngFor="let follow of follows" value="{{ follow.user._id }}">
+                    {{ follow.user.name + ' ' + follow.user.surname + ' (' + follow.user.nick + ')' }}
+                </option>
+            </select>
+
+        </p>
+        <p>
+            <label class="tamaño-letra" >Mensaje</label>
+            <textarea style="height: 133px;" name="text" #text="ngModel" [(ngModel)]="message.text" 
+            class="form-control tamaño-letra" required>
+            </textarea>
+            <span *ngIf="!text.valid && text.touched">
+                El mensaje es obligatorio
+            </span>
+        </p>
+
+        <input type="submit" value="{{ title }}" class="btn btn-success tamaño-letra">
+    </form>
+</div>

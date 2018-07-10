@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/observable';
 import { GLOBAL } from './global';
 import { User } from './models/user';
 import { Follow } from './models/follow';
+import { NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR } from '@angular/core/src/view/provider';
 
 
 @Injectable({
@@ -34,6 +35,41 @@ export class FollowService {
                                    .set('Authorization', token);
     //Hacer la petición a la API por DELETE
     return this._http.delete(this.url + 'follow/' + id_user, {headers: headers});
+  }
+
+  getFollowing(token, user_id = null, page = 1):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                   .set('Authorization', token);
+
+    var url = this.url + 'following';
+
+    if(user_id != null){
+      url = this.url + 'following/'+ user_id + '/' + page;
+    }
+
+    //Hacer petición por GET
+    return this._http.get(url, {headers: headers});
+  }
+
+  getFollowed(token, user_id = null, page = 1):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                   .set('Authorization', token);
+
+    var url = this.url + 'followed';
+
+    if(user_id != null){
+      url = this.url + 'followed/'+ user_id + '/' + page;
+    }
+
+    //Hacer petición por GET
+    return this._http.get(url, {headers: headers});
+  }
+
+  getMyFollows(token):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                   .set('Authorization', token);
+    //Hacer la petición por GET
+    return this._http.get(this.url+'get-my-follows/true',{headers: headers});
   }
 
 

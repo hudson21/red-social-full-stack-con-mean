@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log('Componente de login cargado :)');
+    //console.log('Componente de login cargado :)');
   }
 
   onSubmit(){

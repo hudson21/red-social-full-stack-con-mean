@@ -32,8 +32,8 @@ export class UserEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.user);
-    console.log('Cargado el componente de user-edit :)');
+    //console.log(this.user);
+    //console.log('Cargado el componente de user-edit :)');
   }
 
   onSubmit(){

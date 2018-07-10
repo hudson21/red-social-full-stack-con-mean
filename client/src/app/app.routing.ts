@@ -9,6 +9,8 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { UsersComponent } from './users/users.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { ProfileComponent } from './profile/profile.component';
+import { FollowingComponent } from './following/following.component';
+import { FollowedComponent } from './followed/followed.component';
 
 const appRoutes: Routes = [
     {
@@ -47,6 +49,14 @@ const appRoutes: Routes = [
     {
         path:'perfil/:id',
         component: ProfileComponent
+    },
+    {
+        path: 'siguiendo/:id/:page',
+        component: FollowingComponent
+    },
+    {
+        path:'seguidores/:id/:page',
+        component: FollowedComponent
     },
     {
         path: '**', //Esto hace referencia a alguna ruta que no exista

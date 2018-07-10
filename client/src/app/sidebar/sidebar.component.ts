@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit, DoCheck {
    }
 
   ngOnInit() {
-    console.log("Cargado exitosamente el sidebar.component.ts :)");
+    //console.log("Cargado exitosamente el sidebar.component.ts :)");
     this.statsUser = this._userService.getStatsUser();
   }
 

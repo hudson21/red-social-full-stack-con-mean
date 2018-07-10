@@ -23,7 +23,7 @@
     cursor:pointer;
 }
 .avatar{
-    width: 50px;
+    width: 45px;
     height: 45px;
     border-radius:100px;
     overflow:hidden;/*Lo que se salga del li lo oculte*/
@@ -32,7 +32,7 @@
 }
 .avatar img{
     height:auto;
-    width:55px;
+    width:100%;
 }
 /*******************************************************************************************/
 
@@ -99,7 +99,7 @@ body{
 }
 .item-user .image-user img,
 .item-publication .image-user img{
-    width: 120px;
+    width: 100%;
 
 }
 .item-user .user-name,

@@ -47,7 +47,7 @@ function getFollowingUsers(req, res){
 	//Recoger el usuario logueado
 	var userId = req.user.sub;
 
-	//Comprobar si nos llega un id por la URL
+	//Comprobar si nos llega un id por la URL y un parámetro llamado page
 	if(req.params.id && req.params.page){
 		userId = req.params.id;
 	}
@@ -71,13 +71,65 @@ function getFollowingUsers(req, res){
 
 		if(!follows) return res.status(404).send({message:'No estás siguiendo a ningún usuario'});
 
-		return res.status(200).send({
-			total: total,//Va a ir el todal de documentos que hay en la colección 
-			pages: Math.ceil(total/itemsPerPage),//Calcular el número total de páginas
-			follows
+		followUserIds(req.user.sub).then((value) =>{
+			return res.status(200).send({
+				total: total,//Va a ir el todal de documentos que hay en la colección 
+				pages: Math.ceil(total/itemsPerPage),//Calcular el número total de páginas
+				follows,
+				users_following: value.following,
+				users_follow_me: value.followed
+			});
 		});
 	});
 }
+
+//Función asíncrona para el método getFollowingUsers y getFollowedUsers
+async function followUserIds(user_id){
+
+	try{
+	   //Obejter los usuarios que seguimos			 //El select es para mostrar los campos que yo quiera
+	   var following = await Follow.find({'user':user_id }).select({'_id':0, '__v':0, 'user': 0}).exec()
+		   .then((following) =>{
+			   var follows_clean = [];
+   
+			   following.forEach((follow) =>{
+				   //console.log("followed", follow.followed);
+				   //Guardar los usuarios que yo sigo
+				   follows_clean.push(follow.followed);
+			   });
+   
+			   return follows_clean;
+		   })
+		   .catch((err)=>{
+			   return handleerror(err);
+		   });
+   
+	   //Obejter los usuarios que seguimos			 //El select es para mostrar los campos que yo quiera
+	   var followed = await Follow.find({'followed':user_id }).select({'_id':0, '__v':0, 'followed': 0}).exec()
+		   .then((following) =>{
+			   var follows_clean = [];
+   
+			   following.forEach((follow) =>{
+				   //console.log("user", follow.user);
+				   //Guardar los usuarios que yo sigo
+				   follows_clean.push(follow.user);
+			   });
+   
+			   return follows_clean;
+		   })
+		   .catch((err)=>{
+			   return handleerror(err);
+		   });
+   
+	   return {
+		   following: following,
+		   followed: followed
+	   }
+	}catch(e){
+	   console.log(e);
+   }
+	   
+   }
 
 //Método para mostrar los usuarios seguidores de nosotros
 function getFollowedUsers(req,res){
@@ -107,10 +159,14 @@ function getFollowedUsers(req,res){
 
 		if(!follows) return res.status(404).send({message:'No te sigue ningún usuario'});
 
-		return res.status(200).send({
-			total: total,//Va a ir el todal de documentos que hay en la colección 
-			pages: Math.ceil(total/itemsPerPage),//Calcular el número total de páginas
-			follows
+		followUserIds(req.user.sub).then((value) =>{
+			return res.status(200).send({
+				total: total,//Va a ir el todal de documentos que hay en la colección 
+				pages: Math.ceil(total/itemsPerPage),//Calcular el número total de páginas
+				follows,
+				users_following: value.following,
+				users_follow_me: value.followed
+			});
 		});
 	});
 }

@@ -2,12 +2,12 @@
   <!--<h1 class="h1-strong text-center">{{ title }}</h1>-->
 
   <div class="alert alert-success" *ngIf="status == 'success'">
-    <p class="text-center">Registro completado correctamente, <a [routerLink]="['/login']">Inicia Sesión aquí</a></p>
+    <p class="text-center tamaño-letra">Registro completado correctamente, <a [routerLink]="['/login']">Inicia Sesión aquí</a></p>
     
   </div>
 
   <div class="alert alert-danger" *ngIf="status == 'error'">
-    <p class="text-center">El registro no ha podido completarse, quizás tu email o nicknameya esté en uso
+    <p class="text-center tamaño-letra">El registro no ha podido completarse, quizás tu email o nicknameya esté en uso
       , inténtalo de nuevo con otros datos :(</p>
   </div>
 

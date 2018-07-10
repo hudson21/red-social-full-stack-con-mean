@@ -29,6 +29,7 @@ export class FollowingComponent implements OnInit, DoCheck {
   public status: string;
   public stats;
   public statsUser;
+  public userPageId;
 
   constructor(
     private _router: Router,
@@ -36,14 +37,14 @@ export class FollowingComponent implements OnInit, DoCheck {
     private _userService: UserService,
     private _followService: FollowService
   ) {
-    this.title = 'Usuarios';
+    this.title = 'Usuarios seguidos por';
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = GLOBAL.url;
    }
 
    ngOnInit() {
-    console.log("Cargado con éxito el users.component.ts :)");
+    //console.log("Cargado con éxito el users.component.ts :)");
     this.actualPage();
     this.stats = this._userService.getStats();
     this.statsUser = this._userService.getStatsUser();
@@ -59,6 +60,7 @@ export class FollowingComponent implements OnInit, DoCheck {
     this._route.params.subscribe(params =>{
         //Recogemos el id del usuario
         let user_id = params['id'];
+        this.userPageId = user_id;
 
         let page = +params['page'];//Recoger el parámetro page y convertirlo a entero con el +
         this.page = page;
@@ -80,7 +82,7 @@ export class FollowingComponent implements OnInit, DoCheck {
         }
 
         //Devolver listado de los usuarios
-        this.getFollows(user_id,page);
+        this.getUser(user_id, page);//Lo pongo aquí porque este método está en el OnInit
     });
   }
 
@@ -90,9 +92,9 @@ export class FollowingComponent implements OnInit, DoCheck {
           if(!response.follows){
               this.status = 'error';
           }else{
-              console.log(response);
-              /*this.total = response.total;
-              this.users = response.users;
+              //console.log(response.follows);
+              this.total = response.total;
+              this.following = response.follows;
               this.pages = response.pages;
               //Esta es la variable que voy a examinar en la vista para saber si sigo al usuario o no
               this.follows = response.users_following;
@@ -102,7 +104,7 @@ export class FollowingComponent implements OnInit, DoCheck {
               if(page > this.pages){
                   //Si es la última página que me redirija a la página 1 de los usuarios
                   this._router.navigate(['/usuarios',1]);
-              }*/
+              }
 
           }
         },
@@ -115,6 +117,32 @@ export class FollowingComponent implements OnInit, DoCheck {
           }
         }
       );
+  }
+
+  public user:User;
+  getUser(user_id, page){
+    this._userService.getUser(user_id).subscribe(
+      response =>{
+        if(response.user){
+          this.user = response.user;
+
+          //Devolver listado de los usuarios
+          this.getFollows(user_id,page);
+        }else{
+          //Nos redirije a la Home si el usuario no existe
+          this._router.navigate(['/home']);
+        }
+        
+      },
+      error =>{
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null){
+            this.status = 'error';
+        }
+      }
+    );
   }
 
   public followUserOver;

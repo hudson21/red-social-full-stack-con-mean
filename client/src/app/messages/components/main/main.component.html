@@ -1,0 +1,24 @@
+<div class="col-lg-4">
+    <h2>{{ title }}</h2>
+    <div class="sidebar-admin">
+        <ul class="nav nav-pills nav-stacked nav-pill-stacked-example">
+            <li role="presentation" [routerLinkActive]="['active']">
+                <a class="white tamaño-letra" [routerLink]="['enviar']">Enviar mensaje</a>
+            </li>
+            <li role="presentation" [routerLinkActive]="['active']">
+                <a class="white tamaño-letra" [routerLink]="['recibidos']">Mensajes recibidos</a>
+            </li>
+            <li role="presentation" [routerLinkActive]="['active']">
+                <a class="white tamaño-letra" [routerLink]="['enviados']">Mensajes enviados</a>
+            </li>
+            <li role="presentation" [routerLinkActive]="['active']">
+                <a class="white tamaño-letra" [routerLink]="['/home']">Información</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="col-lg-8">
+    <!--El router-outlet es para cargar otras páginas dentro de la misma-->
+    <router-outlet></router-outlet>
+</div>

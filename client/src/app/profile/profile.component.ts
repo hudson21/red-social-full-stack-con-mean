@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
-    console.log('profile.component.ts cargado exitosamente :)');
+    //console.log('profile.component.ts cargado exitosamente :)');
     this.loadPage();
     this.stats = this._userService.getStats();
     this.statsUser = this._userService.getStatsUser();

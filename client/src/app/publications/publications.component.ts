@@ -45,7 +45,7 @@ export class PublicationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Cargado exitosamente el publications.component.ts :)');
+    //console.log('Cargado exitosamente el publications.component.ts :)');
     this.getPublications(this.user, this.page);
     
   }

@@ -27,6 +27,13 @@
             Usuarios
           </a>
         </li>
+
+        <li>
+            <a [routerLink]="['/mensajes']" [routerLinkActive]="['active']" class="links tamaño-letra">
+              <span class="glyphicon glyphicon-envelope"></span>
+              Mensajes
+            </a>
+          </li>
       </ul>
 
       <ul class=" nav navbar-nav navbar-right" *ngIf="!identity">

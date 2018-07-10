@@ -7,10 +7,14 @@ import { HttpClientModule } from '@angular/common/http';//Módulo para hacer pet
 import { routing, appRoutingProviders } from './app.routing';
 import { MomentModule } from 'angular2-moment';//Cargamos el nuevo módulo de moment
 
+//Módulo creado por nosotros (Mensajes)
+import { MessagesModule } from './messages/messages.module';
+
 import { UserService } from './user.service';
 import { UploadService } from './upload.service';
 import { FollowService} from './follow.service';
 import { PublicationService } from './publication.service';
+import { MessageService } from './message.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -23,8 +27,7 @@ import { TimelineComponent } from './timeline/timeline.component';
 import { PublicationsComponent } from './publications/publications.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FollowingComponent } from './following/following.component';
-
-
+import { FollowedComponent } from './followed/followed.component';
 
 @NgModule({
   declarations: [
@@ -38,14 +41,16 @@ import { FollowingComponent } from './following/following.component';
     TimelineComponent,
     PublicationsComponent,
     ProfileComponent,
-    FollowingComponent
+    FollowingComponent,
+    FollowedComponent
   ],
   imports: [//Cargar módulos
     BrowserModule,
     FormsModule,
     routing,
     HttpClientModule,
-    MomentModule
+    MomentModule,
+    MessagesModule
   ],
   providers: [
     appRoutingProviders,
