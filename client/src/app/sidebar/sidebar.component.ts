@@ -16,10 +16,13 @@ export class SidebarComponent implements OnInit, DoCheck {
 
   public url:string;
   public token;
-  public stats;
+  public statsUser;
   public status;
   public identity;
   public publication: Publication;
+
+  //Output
+  @Output() sent = new EventEmitter();//Esta propiedad va a poder emitir eventos
 
   constructor(
     private _userService : UserService,
@@ -36,20 +39,22 @@ export class SidebarComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     console.log("Cargado exitosamente el sidebar.component.ts :)");
-    this.stats = this._userService.getStats();
+    this.statsUser = this._userService.getStatsUser();
   }
 
   ngDoCheck(){
-    this.stats = this._userService.getStats();
+    this.statsUser = this._userService.getStatsUser();
   }
 
-  onSubmit(newPubForm){
+  onSubmit(newPubForm, $event){
     //console.log(this.publication);
     this._publicationService.addPublication(this.token, this.publication).subscribe(
       response =>{
         if(response.publication){
           //this.publication = response.publication;
-          
+
+          //Comprobar si hay imagen a subir en la publicación o no
+          if(this.filesToUpload && this.filesToUpload.length){
           //Subir la Imagen
           this._uploadService.makeFileRequest(this.url + 'upload-image-pub/'
                                              +response.publication._id, [],
@@ -61,7 +66,17 @@ export class SidebarComponent implements OnInit, DoCheck {
                                  newPubForm.reset();//Reseteo el formulario y lo vacío 
                                  this.getCounters();
                                  this._router.navigate(['/timeline']);
+                                 this.sent.emit({send:'true'}) //Emito el evento
                               });
+          }else{
+            this.status = 'success';
+            newPubForm.reset();//Reseteo el formulario y lo vacío 
+            this.getCounters();
+            this._router.navigate(['/timeline']);
+            this.sent.emit({send:'true'}) //Emito el evento
+          }
+        
+          
         }else{
           this.status = 'error';
         }
@@ -82,17 +97,16 @@ export class SidebarComponent implements OnInit, DoCheck {
     this.filesToUpload = <Array<File>>fileInput.target.files;
   }
 
-  //Output
-  @Output() sent = new EventEmitter();//Esta propiedad va a poder emitir eventos
+  
   sendPublication(event){
     //console.log(event);
     this.sent.emit({send:'true'}) //Emito el evento
   }
 
   getCounters(){
-    this._userService.getCounters(this.identity._id).subscribe(
+    this._userService.getCountersWithoutURL().subscribe(
         response =>{
-          localStorage.setItem('stats',JSON.stringify(response));
+          localStorage.setItem('statsUser',JSON.stringify(response));
         },
         error =>{
             console.log(<any>error);

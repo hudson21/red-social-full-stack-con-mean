@@ -20,6 +20,7 @@ export class ProfileComponent implements OnInit, DoCheck {
   public identity;
   public token;
   public stats;
+  public statsUser;
   public followed;
   public following;
   public user:User;
@@ -43,10 +44,11 @@ export class ProfileComponent implements OnInit, DoCheck {
     console.log('profile.component.ts cargado exitosamente :)');
     this.loadPage();
     this.stats = this._userService.getStats();
+    this.statsUser = this._userService.getStatsUser();
   }
 
   ngDoCheck(){
-    //this.stats = this._userService.getStats();
+    this.statsUser = this._userService.getStatsUser();
   }
 
   loadPage(){
@@ -63,7 +65,7 @@ export class ProfileComponent implements OnInit, DoCheck {
     this._userService.getUser(user_id).subscribe(
       response =>{
         if(response.user){
-          console.log(response);
+          //console.log(response);
           this.user = response.user;
 
           //Si hay un id dentro del campo de following
@@ -109,9 +111,9 @@ export class ProfileComponent implements OnInit, DoCheck {
   }
 
   getCountersN(){
-    this._userService.getCounters().subscribe(
+    this._userService.getCountersWithoutURL().subscribe(
         response =>{
-          localStorage.setItem('stats',JSON.stringify(response));
+          localStorage.setItem('statsUser',JSON.stringify(response));
         },
         error =>{
             console.log(<any>error);

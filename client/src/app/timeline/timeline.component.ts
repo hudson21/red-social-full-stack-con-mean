@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Publication } from '../models/publication';
 import { UserService } from '../user.service';
@@ -13,7 +13,7 @@ import * as $ from 'jquery';// import Jquery here
   styleUrls: ['./timeline.component.css'],
   providers:[ UserService, PublicationService]
 })
-export class TimelineComponent implements OnInit {
+export class TimelineComponent implements OnInit, DoCheck {
 
   public url :string;
   public identity;
@@ -25,6 +25,8 @@ export class TimelineComponent implements OnInit {
   public pages;
   public itemsPerPage;
   public publications: Publication[];
+  public showImage;
+  public statsUser;
 
   constructor(
     private _router: Router,
@@ -42,6 +44,11 @@ export class TimelineComponent implements OnInit {
   ngOnInit() {
     console.log('Cargado exitosamente el timeline.component.ts :)');
     this.getPublications(this.page);
+    this.statsUser = this._userService.getStatsUser();
+  }
+
+  ngDoCheck(){
+    this.statsUser = this._userService.getStatsUser();
   }
 
   getPublications(page, adding = false){
@@ -91,11 +98,42 @@ export class TimelineComponent implements OnInit {
     this.getPublications(this.page, true);
   }
 
-  refresh(event){
+  refresh(event = null){
     //console.log(event);
     //Esto lo hago para que siempre me redirija a la página 1 y poder hacer el scroll
     this.getPublications(1);
     this.noMore = false;
+  }
+
+  showThisImage(publication_id){
+    this.showImage = publication_id;
+  }
+
+  hideThisImage(publication_id){
+    this.showImage = 0;
+  }
+
+  deletePublication(publication_id){
+    this._publicationService.deletePublication(this.token,publication_id).subscribe(
+      response =>{
+        this.refresh();
+        this.getCounters();
+      },
+      error =>{
+        console.log(<any>error);
+      }
+    );
+  }
+
+  getCounters(){
+    this._userService.getCountersWithoutURL().subscribe(
+        response =>{
+          localStorage.setItem('statsUser',JSON.stringify(response));
+        },
+        error =>{
+            console.log(<any>error);
+        }
+    );
   }
 
 }

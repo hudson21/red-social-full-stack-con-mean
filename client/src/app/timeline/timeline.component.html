@@ -52,6 +52,55 @@
                 <h4 style="font-weight:bold" class="publication-text pull-left">
                   {{ publication.text }}
                 </h4>
+
+                <div class="pull-right" >
+
+                  &nbsp;
+
+                  <a href="#myModal{{publication._id}}" role="button" class="btn bt-large btn-danger"
+                  data-toggle="modal" *ngIf="publication.user._id == identity._id">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </a>
+
+                  <div id="myModal{{publication._id}}" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 style="font-weight:bold" class="modal-title">¿Estás seguro que quieres eliminar la publicación?</h4>
+                            </div>
+                            <div class="modal-body"> 
+                                <p class="tamaño-letra">Si la borras no podrás recuperarla :(</p>
+                                <p style="color:red" class="tamaño-letra">"{{ publication.text}}"</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default tamaño-letra" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary tamaño-letra" data-dismiss="modal"
+                                (click)="deletePublication(publication._id)">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+
+                <div class="pull-right" *ngIf="publication.file != 'null'">
+                  <button class=" btn btn-warning pull-right" 
+                  (click)="showThisImage(publication._id)"
+                  *ngIf="showImage != publication._id">
+                    <span class="glyphicon glyphicon-picture"></span>
+                  </button>
+
+                  <button class=" btn btn-danger pull-right" 
+                  (click)="hideThisImage(publication._id)"
+                  *ngIf="showImage == publication._id">
+                    <span class="glyphicon glyphicon-remove-circle"></span>
+                  </button>
+                </div>
+                
+                <div style="margin-top:10px" class="col-lg-12" *ngIf="publication.file != 'null' && showImage == publication._id">
+                  <img src="{{ url + 'get-image-pub/'+ publication.file }}" class="col-lg-12">
+                </div>
         
               </div>
               </div>

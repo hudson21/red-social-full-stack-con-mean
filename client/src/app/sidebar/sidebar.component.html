@@ -19,14 +19,14 @@
 
   <div class="clearfix"></div>
 
-  <div class="stats" *ngIf="stats">
+  <div class="stats" *ngIf="statsUser">
     <div class="following-data">
       <a href="#">
         <span class="label-stats">
            Siguiendo
         </span>
         <span class="number-stats">
-          {{ stats.following }}
+          {{ statsUser.following }}
         </span>
       </a>
     </div>
@@ -37,7 +37,7 @@
              Seguidores
            </span>
           <span class="number-stats">
-            {{ stats.followed }}
+            {{ statsUser.followed }}
            </span>
         </a>
     </div>
@@ -48,7 +48,7 @@
               Publicaciones
             </span>
             <span class="number-stats">
-              {{ stats.publications }}
+              {{ statsUser.publications }}
             </span>
         </a>
     </div>
@@ -68,7 +68,7 @@
     <p class="text-center">Publicación no enviada :-( !!!!</p>
   </div>
 
-  <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm);sendPublication($event)" class="col-lg-10">
+  <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm, $event)" class="col-lg-10">
       <p>
         <label class="">¿Qué estas pensando hoy?</label>
         <textarea name="text" #text="ngModel" [(ngModel)]="publication.text" 

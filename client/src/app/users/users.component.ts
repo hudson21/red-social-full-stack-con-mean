@@ -27,6 +27,7 @@ export class UsersComponent implements OnInit, DoCheck {
   public follows;
   public status: string;
   public stats;
+  public statsUser;
 
   constructor(
     private _router: Router,
@@ -44,10 +45,12 @@ export class UsersComponent implements OnInit, DoCheck {
     console.log("Cargado con éxito el users.component.ts :)");
     this.actualPage();
     this.stats = this._userService.getStats();
+    this.statsUser = this._userService.getStatsUser();
   }
 
   ngDoCheck(){
     this.stats = this._userService.getStats();
+    this.statsUser = this._userService.getStatsUser();
   }
 
   //Coger la página actual en la que estamos
@@ -168,9 +171,9 @@ export class UsersComponent implements OnInit, DoCheck {
   }
 
   getCounters(){
-    this._userService.getCounters().subscribe(
+    this._userService.getCountersWithoutURL().subscribe(
         response =>{
-          localStorage.setItem('stats',JSON.stringify(response));
+          localStorage.setItem('statsUser',JSON.stringify(response));
         },
         error =>{
             console.log(<any>error);

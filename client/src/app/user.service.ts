@@ -14,6 +14,7 @@ export class UserService {
   public identity;
   public token;
   public stats;
+  public statsUser;
   
   constructor(public _http:HttpClient) {
     this.url = GLOBAL.url;
@@ -77,6 +78,18 @@ export class UserService {
     return this.stats;
   }
 
+  getStatsUser(){
+    let statsUser = JSON.parse(localStorage.getItem('statsUser'));
+
+    if(statsUser != 'undefined'){
+        this.statsUser = statsUser;
+    }else{
+        this.statsUser = null;
+    }
+
+    return this.statsUser;
+  }
+
   getCounters(userId = null):Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                    .set('Authorization',this.getToken());
@@ -85,6 +98,14 @@ export class UserService {
     }else{
       return this._http.get(this.url+'counters/', {headers: headers});
     }
+  }
+
+  getCountersWithoutURL():Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                   .set('Authorization',this.getToken());
+  
+    return this._http.get(this.url+'counters/', {headers: headers});
+    
   }
 
   updateUser(user:User):Observable<any>{
