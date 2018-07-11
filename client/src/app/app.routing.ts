@@ -1,5 +1,5 @@
 import { ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 //Compomentes
 import { LoginComponent } from './login/login.component';
@@ -11,6 +11,8 @@ import { TimelineComponent } from './timeline/timeline.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FollowingComponent } from './following/following.component';
 import { FollowedComponent } from './followed/followed.component';
+
+import { UserGuard } from './user.guard';
 
 const appRoutes: Routes = [
     {
@@ -32,31 +34,38 @@ const appRoutes: Routes = [
     },
     {
         path: 'mis-datos',
-        component: UserEditComponent
+        component: UserEditComponent,
+        canActivate: [UserGuard]
     },
     {
         path: 'usuarios/:page',
-        component: UsersComponent
+        component: UsersComponent,
+        canActivate: [UserGuard]
     },
     {
         path: 'usuarios',
-        component: UsersComponent
+        component: UsersComponent,
+        canActivate: [UserGuard]
     },
     {
         path:'timeline',
-        component: TimelineComponent
+        component: TimelineComponent,
+        canActivate: [UserGuard]
     },
     {
         path:'perfil/:id',
-        component: ProfileComponent
+        component: ProfileComponent,
+        canActivate: [UserGuard]
     },
     {
         path: 'siguiendo/:id/:page',
-        component: FollowingComponent
+        component: FollowingComponent,
+        canActivate: [UserGuard]
     },
     {
         path:'seguidores/:id/:page',
-        component: FollowedComponent
+        component: FollowedComponent,
+        canActivate: [UserGuard]
     },
     {
         path: '**', //Esto hace referencia a alguna ruta que no exista

@@ -8,12 +8,12 @@ import { MessageService } from '../../../message.service';
 import { UserService } from '../../../user.service';
 
 @Component({
-    selector: 'received',
-    templateUrl: './received.component.html',
-    styleUrls: ['./received.component.css'],
+    selector: 'sent',
+    templateUrl: './sent.component.html',
+    styleUrls: ['./sent.component.css'],
     providers:[ UserService,MessageService, FollowService ]
 })
-export class ReceivedComponent implements OnInit{
+export class SentComponent implements OnInit{
 
     public title:string;
     public url:string;
@@ -35,7 +35,7 @@ export class ReceivedComponent implements OnInit{
         private _router: Router,
         private _route: ActivatedRoute
     ){
-        this.title = 'Mensajes recibidos';
+        this.title = 'Mensajes enviados';
         this.url = GLOBAL.url;
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
@@ -43,9 +43,9 @@ export class ReceivedComponent implements OnInit{
     }
 
     ngOnInit(){
-        console.log('received.component.ts se ha cargado con éxito :)');
+        console.log('sent.component.ts se ha cargado con éxito :)');
         this.actualPage();
-    }
+    }   
 
     actualPage(){
         this._route.params.subscribe(params =>{
@@ -74,7 +74,7 @@ export class ReceivedComponent implements OnInit{
       }
 
     getMessages(token, page){
-        this._messageService.getReceivedMessages(token, page).subscribe(
+        this._messageService.getEmittedMessages(token, page).subscribe(
             response =>{
                 if(!response.messages){
                     

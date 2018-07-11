@@ -17,7 +17,7 @@
                     {{ publication.user.name + ' ' + publication.user.surname }}
                   </span>
     
-                    &nbsp;<span class="tamaño-letra">|</span>&nbsp;
+                    &nbsp;<span class="tamaño-letra black">|</span>&nbsp;
                     
                   <span class="date tamaño-letra">
                     {{ (publication.created_at | amFromUnix)| amLocale:'es' | amTimeAgo }} <!--adTimeAgo es una pipe(tubería) de moment-->

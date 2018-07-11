@@ -10,12 +10,15 @@ import { MomentModule } from 'angular2-moment';//Cargamos el nuevo módulo de mo
 //Módulo creado por nosotros (Mensajes)
 import { MessagesModule } from './messages/messages.module';
 
+//Servicios
 import { UserService } from './user.service';
 import { UploadService } from './upload.service';
 import { FollowService} from './follow.service';
 import { PublicationService } from './publication.service';
 import { MessageService } from './message.service';
+import { UserGuard } from './user.guard';
 
+//Componentes
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -28,6 +31,8 @@ import { PublicationsComponent } from './publications/publications.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FollowingComponent } from './following/following.component';
 import { FollowedComponent } from './followed/followed.component';
+
+
 
 @NgModule({
   declarations: [
@@ -57,7 +62,8 @@ import { FollowedComponent } from './followed/followed.component';
     UserService,
     UploadService,
     FollowService,
-    PublicationService
+    PublicationService,
+    UserGuard
   ], //En los providers cargamos servicios
   bootstrap: [AppComponent]
 })

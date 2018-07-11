@@ -1,5 +1,72 @@
 <div class="col-lg-10">
   <h3>{{ title }}</h3>
+
+  <div *ngIf="!messages" class="m-auto">
+    <div id="publications" style="min-height: 300px">
+      
+        <div class="text-center " style="margin-top:250px;font-size:75px">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+    </div>
+  </div>
           
   <!--LISTADO DE MENSAJES ENVIADOS-->
+  <div class="people" *ngIf="messages">
+
+    <!--LISTADO DE LOS USUARIOS-->
+    
+    <div *ngFor="let message of messages" class="item-user">
+      <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="image-user pull-left">
+                <a href="#">
+                  <img src="{{ url + 'get-image-user/' + message.emitter.image }}" 
+                  *ngIf="message.emitter.image">
+                  <img class="avatar-default" src="../../assets/avatar_default2.png" 
+                  *ngIf="!message.emitter.image" >
+                </a>
+            </div>
+          <div class="white user-name pull-left">
+            <p class="name-surname">
+              <a [routerLink]="['/perfil',message.emitter._id]" class="tamaño-letra">
+                 {{ message.emitter.name + ' ' + message.emitter.surname }}  
+              </a>
+              &nbsp;<span class="tamaño-letra black">|</span>&nbsp;
+
+              <span  class="nickname tamaño-letra">{{ message.emitter.nick }}</span>
+
+              &nbsp;<span class="tamaño-letra black">|</span>&nbsp;
+
+              <span class="date tamaño-letra nickname">
+                {{ (message.created_at | amFromUnix)| amLocale:'es' | amTimeAgo }} <!--adTimeAgo es una pipe(tubería) de moment-->
+             </span>
+
+             
+
+            </p>
+            <p class="black tamaño-letra">
+              {{message.text }}
+            </p>
+
+            <p class="">
+              <span class="date tamaño-letra nickname">
+                Enviado a 
+                <a [routerLink]="['/perfil', message.receiver._id]">
+                  {{ message.receiver.name + ' ' + message.receiver.surname }}
+                </a> 
+             </span>
+            </p>
+              
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+    <ul class="pagination pull-right">
+      <li *ngIf="page > 1"><a [routerLink]="['/mensajes/enviados', prev_page]">Anterior</a></li>
+      <li *ngIf="pages != page"><a [routerLink]="['/mensajes/enviados', next_page]">Siguiente</a></li>
+    </ul>
+
+  </div>
 </div>

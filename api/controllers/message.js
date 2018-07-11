@@ -50,6 +50,7 @@ function getReceivedMessages(req, res){
     //Hacer una consulta a los mensajes donde el destinatario seamos nosotros
     Message.find({'receiver': userId})
         .populate('emitter', 'name surname _id nick image')//Puedo decirle que campos quiero que se muestren
+        .sort('-created_at')
         .paginate(page,itemsPerPage, (err, messages, total) =>{
             if(err) return res.status(500).send({message:'Error en la petición'});
             if(!messages) return res.status(404).send({message:'No hay mensajes'});
@@ -78,6 +79,7 @@ function getEmittedMessages(req, res){
     //Hacer una consulta a los mensajes donde el destinatario seamos nosotros
     Message.find({'emitter': userId})
         .populate('emitter receiver', 'name surname _id nick image')//Puedo decirle que campos quiero que se muestren
+        .sort('-created_at')
         .paginate(page,itemsPerPage, (err, messages, total) =>{
             if(err) return res.status(500).send({message:'Error en la petición'});
             if(!messages) return res.status(404).send({message:'No hay mensajes'});
